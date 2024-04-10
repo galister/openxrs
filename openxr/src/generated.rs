@@ -63,6 +63,7 @@ pub struct ExtensionSet {
     pub ext_thermal_query: bool,
     pub ext_debug_utils: bool,
     pub ext_eye_gaze_interaction: bool,
+    pub extx_overlay: bool,
     pub ext_view_configuration_depth_range: bool,
     pub ext_conformance_automation: bool,
     pub ext_hand_tracking: bool,
@@ -122,6 +123,7 @@ pub struct ExtensionSet {
     pub fb_spatial_entity_storage_batch: bool,
     pub fb_spatial_entity_user: bool,
     pub htc_vive_cosmos_controller_interaction: bool,
+    pub htcx_vive_tracker_interaction: bool,
     pub htc_facial_tracking: bool,
     pub htc_vive_focus3_controller_interaction: bool,
     pub htc_hand_interaction: bool,
@@ -177,7 +179,9 @@ pub struct ExtensionSet {
     pub ml_localization_map: bool,
     pub ml_user_calibration: bool,
     pub mnd_headless: bool,
+    pub mndx_egl_enable: bool,
     pub mnd_swapchain_usage_input_attachment_bit: bool,
+    pub mndx_force_feedback_curl: bool,
     pub msft_unbounded_reference_space: bool,
     pub msft_spatial_anchor: bool,
     pub msft_spatial_graph_bridge: bool,
@@ -235,6 +239,9 @@ impl ExtensionSet {
                 }
                 raw::EyeGazeInteractionEXT::NAME => {
                     out.ext_eye_gaze_interaction = true;
+                }
+                raw::OverlayEXT::NAME => {
+                    out.extx_overlay = true;
                 }
                 raw::ViewConfigurationDepthRangeEXT::NAME => {
                     out.ext_view_configuration_depth_range = true;
@@ -407,6 +414,9 @@ impl ExtensionSet {
                 raw::ViveCosmosControllerInteractionHTC::NAME => {
                     out.htc_vive_cosmos_controller_interaction = true;
                 }
+                raw::ViveTrackerInteractionHTC::NAME => {
+                    out.htcx_vive_tracker_interaction = true;
+                }
                 raw::FacialTrackingHTC::NAME => {
                     out.htc_facial_tracking = true;
                 }
@@ -558,8 +568,14 @@ impl ExtensionSet {
                 raw::HeadlessMND::NAME => {
                     out.mnd_headless = true;
                 }
+                raw::EglEnableMND::NAME => {
+                    out.mndx_egl_enable = true;
+                }
                 raw::SwapchainUsageInputAttachmentBitMND::NAME => {
                     out.mnd_swapchain_usage_input_attachment_bit = true;
+                }
+                raw::ForceFeedbackCurlMND::NAME => {
+                    out.mndx_force_feedback_curl = true;
                 }
                 raw::UnboundedReferenceSpaceMSFT::NAME => {
                     out.msft_unbounded_reference_space = true;
@@ -686,6 +702,11 @@ impl ExtensionSet {
         {
             if self.ext_eye_gaze_interaction {
                 out.push(raw::EyeGazeInteractionEXT::NAME.into());
+            }
+        }
+        {
+            if self.extx_overlay {
+                out.push(raw::OverlayEXT::NAME.into());
             }
         }
         {
@@ -972,6 +993,11 @@ impl ExtensionSet {
             }
         }
         {
+            if self.htcx_vive_tracker_interaction {
+                out.push(raw::ViveTrackerInteractionHTC::NAME.into());
+            }
+        }
+        {
             if self.htc_facial_tracking {
                 out.push(raw::FacialTrackingHTC::NAME.into());
             }
@@ -1219,8 +1245,18 @@ impl ExtensionSet {
             }
         }
         {
+            if self.mndx_egl_enable {
+                out.push(raw::EglEnableMND::NAME.into());
+            }
+        }
+        {
             if self.mnd_swapchain_usage_input_attachment_bit {
                 out.push(raw::SwapchainUsageInputAttachmentBitMND::NAME.into());
+            }
+        }
+        {
+            if self.mndx_force_feedback_curl {
+                out.push(raw::ForceFeedbackCurlMND::NAME.into());
             }
         }
         {
@@ -1375,6 +1411,7 @@ pub struct InstanceExtensions {
     pub ext_thermal_query: Option<raw::ThermalQueryEXT>,
     pub ext_debug_utils: Option<raw::DebugUtilsEXT>,
     pub ext_eye_gaze_interaction: Option<raw::EyeGazeInteractionEXT>,
+    pub extx_overlay: Option<raw::OverlayEXT>,
     pub ext_view_configuration_depth_range: Option<raw::ViewConfigurationDepthRangeEXT>,
     pub ext_conformance_automation: Option<raw::ConformanceAutomationEXT>,
     pub ext_hand_tracking: Option<raw::HandTrackingEXT>,
@@ -1435,6 +1472,7 @@ pub struct InstanceExtensions {
     pub fb_spatial_entity_storage_batch: Option<raw::SpatialEntityStorageBatchFB>,
     pub fb_spatial_entity_user: Option<raw::SpatialEntityUserFB>,
     pub htc_vive_cosmos_controller_interaction: Option<raw::ViveCosmosControllerInteractionHTC>,
+    pub htcx_vive_tracker_interaction: Option<raw::ViveTrackerInteractionHTC>,
     pub htc_facial_tracking: Option<raw::FacialTrackingHTC>,
     pub htc_vive_focus3_controller_interaction: Option<raw::ViveFocus3ControllerInteractionHTC>,
     pub htc_hand_interaction: Option<raw::HandInteractionHTC>,
@@ -1491,7 +1529,9 @@ pub struct InstanceExtensions {
     pub ml_localization_map: Option<raw::LocalizationMapML>,
     pub ml_user_calibration: Option<raw::UserCalibrationML>,
     pub mnd_headless: Option<raw::HeadlessMND>,
+    pub mndx_egl_enable: Option<raw::EglEnableMND>,
     pub mnd_swapchain_usage_input_attachment_bit: Option<raw::SwapchainUsageInputAttachmentBitMND>,
+    pub mndx_force_feedback_curl: Option<raw::ForceFeedbackCurlMND>,
     pub msft_unbounded_reference_space: Option<raw::UnboundedReferenceSpaceMSFT>,
     pub msft_spatial_anchor: Option<raw::SpatialAnchorMSFT>,
     pub msft_spatial_graph_bridge: Option<raw::SpatialGraphBridgeMSFT>,
@@ -1566,6 +1606,11 @@ impl InstanceExtensions {
             },
             ext_eye_gaze_interaction: if required.ext_eye_gaze_interaction {
                 Some(raw::EyeGazeInteractionEXT {})
+            } else {
+                None
+            },
+            extx_overlay: if required.extx_overlay {
+                Some(raw::OverlayEXT {})
             } else {
                 None
             },
@@ -1856,6 +1901,11 @@ impl InstanceExtensions {
             } else {
                 None
             },
+            htcx_vive_tracker_interaction: if required.htcx_vive_tracker_interaction {
+                Some(raw::ViveTrackerInteractionHTC::load(entry, instance)?)
+            } else {
+                None
+            },
             htc_facial_tracking: if required.htc_facial_tracking {
                 Some(raw::FacialTrackingHTC::load(entry, instance)?)
             } else {
@@ -2113,10 +2163,20 @@ impl InstanceExtensions {
             } else {
                 None
             },
+            mndx_egl_enable: if required.mndx_egl_enable {
+                Some(raw::EglEnableMND {})
+            } else {
+                None
+            },
             mnd_swapchain_usage_input_attachment_bit: if required
                 .mnd_swapchain_usage_input_attachment_bit
             {
                 Some(raw::SwapchainUsageInputAttachmentBitMND {})
+            } else {
+                None
+            },
+            mndx_force_feedback_curl: if required.mndx_force_feedback_curl {
+                Some(raw::ForceFeedbackCurlMND::load(entry, instance)?)
             } else {
                 None
             },
@@ -3503,6 +3563,12 @@ pub mod raw {
         pub const NAME: &'static [u8] = sys::EXT_EYE_GAZE_INTERACTION_EXTENSION_NAME;
     }
     #[derive(Copy, Clone)]
+    pub struct OverlayEXT {}
+    impl OverlayEXT {
+        pub const VERSION: u32 = sys::EXTX_overlay_SPEC_VERSION;
+        pub const NAME: &'static [u8] = sys::EXTX_OVERLAY_EXTENSION_NAME;
+    }
+    #[derive(Copy, Clone)]
     pub struct ViewConfigurationDepthRangeEXT {}
     impl ViewConfigurationDepthRangeEXT {
         pub const VERSION: u32 = sys::EXT_view_configuration_depth_range_SPEC_VERSION;
@@ -4533,6 +4599,27 @@ pub mod raw {
         pub const NAME: &'static [u8] = sys::HTC_VIVE_COSMOS_CONTROLLER_INTERACTION_EXTENSION_NAME;
     }
     #[derive(Copy, Clone)]
+    pub struct ViveTrackerInteractionHTC {
+        pub enumerate_vive_tracker_paths_h: pfn::EnumerateViveTrackerPathsHTCX,
+    }
+    impl ViveTrackerInteractionHTC {
+        pub const VERSION: u32 = sys::HTCX_vive_tracker_interaction_SPEC_VERSION;
+        pub const NAME: &'static [u8] = sys::HTCX_VIVE_TRACKER_INTERACTION_EXTENSION_NAME;
+        #[doc = r" Load the extension's function pointer table"]
+        #[doc = r""]
+        #[doc = r" # Safety"]
+        #[doc = r""]
+        #[doc = r" `instance` must be a valid instance handle."]
+        pub unsafe fn load(entry: &Entry, instance: sys::Instance) -> Result<Self> {
+            Ok(Self {
+                enumerate_vive_tracker_paths_h: mem::transmute(entry.get_instance_proc_addr(
+                    instance,
+                    CStr::from_bytes_with_nul_unchecked(b"xrEnumerateViveTrackerPathsHTCX\0"),
+                )?),
+            })
+        }
+    }
+    #[derive(Copy, Clone)]
     pub struct FacialTrackingHTC {
         pub create_facial_tracker: pfn::CreateFacialTrackerHTC,
         pub destroy_facial_tracker: pfn::DestroyFacialTrackerHTC,
@@ -5452,11 +5539,38 @@ pub mod raw {
         pub const NAME: &'static [u8] = sys::MND_HEADLESS_EXTENSION_NAME;
     }
     #[derive(Copy, Clone)]
+    pub struct EglEnableMND {}
+    impl EglEnableMND {
+        pub const VERSION: u32 = sys::MNDX_egl_enable_SPEC_VERSION;
+        pub const NAME: &'static [u8] = sys::MNDX_EGL_ENABLE_EXTENSION_NAME;
+    }
+    #[derive(Copy, Clone)]
     pub struct SwapchainUsageInputAttachmentBitMND {}
     impl SwapchainUsageInputAttachmentBitMND {
         pub const VERSION: u32 = sys::MND_swapchain_usage_input_attachment_bit_SPEC_VERSION;
         pub const NAME: &'static [u8] =
             sys::MND_SWAPCHAIN_USAGE_INPUT_ATTACHMENT_BIT_EXTENSION_NAME;
+    }
+    #[derive(Copy, Clone)]
+    pub struct ForceFeedbackCurlMND {
+        pub apply_force_feedback_curl_m: pfn::ApplyForceFeedbackCurlMNDX,
+    }
+    impl ForceFeedbackCurlMND {
+        pub const VERSION: u32 = sys::MNDX_force_feedback_curl_SPEC_VERSION;
+        pub const NAME: &'static [u8] = sys::MNDX_FORCE_FEEDBACK_CURL_EXTENSION_NAME;
+        #[doc = r" Load the extension's function pointer table"]
+        #[doc = r""]
+        #[doc = r" # Safety"]
+        #[doc = r""]
+        #[doc = r" `instance` must be a valid instance handle."]
+        pub unsafe fn load(entry: &Entry, instance: sys::Instance) -> Result<Self> {
+            Ok(Self {
+                apply_force_feedback_curl_m: mem::transmute(entry.get_instance_proc_addr(
+                    instance,
+                    CStr::from_bytes_with_nul_unchecked(b"xrApplyForceFeedbackCurlMNDX\0"),
+                )?),
+            })
+        }
     }
     #[derive(Copy, Clone)]
     pub struct UnboundedReferenceSpaceMSFT {}

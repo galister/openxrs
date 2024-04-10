@@ -11861,6 +11861,8 @@ pub const EXT_debug_utils_SPEC_VERSION: u32 = 5u32;
 pub const EXT_DEBUG_UTILS_EXTENSION_NAME: &[u8] = b"XR_EXT_debug_utils\0";
 pub const EXT_eye_gaze_interaction_SPEC_VERSION: u32 = 2u32;
 pub const EXT_EYE_GAZE_INTERACTION_EXTENSION_NAME: &[u8] = b"XR_EXT_eye_gaze_interaction\0";
+pub const EXTX_overlay_SPEC_VERSION: u32 = 5u32;
+pub const EXTX_OVERLAY_EXTENSION_NAME: &[u8] = b"XR_EXTX_overlay\0";
 pub const EXT_view_configuration_depth_range_SPEC_VERSION: u32 = 1u32;
 pub const EXT_VIEW_CONFIGURATION_DEPTH_RANGE_EXTENSION_NAME: &[u8] =
     b"XR_EXT_view_configuration_depth_range\0";
@@ -11998,6 +12000,9 @@ pub const FB_SPATIAL_ENTITY_USER_EXTENSION_NAME: &[u8] = b"XR_FB_spatial_entity_
 pub const HTC_vive_cosmos_controller_interaction_SPEC_VERSION: u32 = 1u32;
 pub const HTC_VIVE_COSMOS_CONTROLLER_INTERACTION_EXTENSION_NAME: &[u8] =
     b"XR_HTC_vive_cosmos_controller_interaction\0";
+pub const HTCX_vive_tracker_interaction_SPEC_VERSION: u32 = 3u32;
+pub const HTCX_VIVE_TRACKER_INTERACTION_EXTENSION_NAME: &[u8] =
+    b"XR_HTCX_vive_tracker_interaction\0";
 pub const HTC_facial_tracking_SPEC_VERSION: u32 = 2u32;
 pub const HTC_FACIAL_TRACKING_EXTENSION_NAME: &[u8] = b"XR_HTC_facial_tracking\0";
 pub const HTC_vive_focus3_controller_interaction_SPEC_VERSION: u32 = 2u32;
@@ -12121,9 +12126,13 @@ pub const ML_user_calibration_SPEC_VERSION: u32 = 1u32;
 pub const ML_USER_CALIBRATION_EXTENSION_NAME: &[u8] = b"XR_ML_user_calibration\0";
 pub const MND_headless_SPEC_VERSION: u32 = 2u32;
 pub const MND_HEADLESS_EXTENSION_NAME: &[u8] = b"XR_MND_headless\0";
+pub const MNDX_egl_enable_SPEC_VERSION: u32 = 1u32;
+pub const MNDX_EGL_ENABLE_EXTENSION_NAME: &[u8] = b"XR_MNDX_egl_enable\0";
 pub const MND_swapchain_usage_input_attachment_bit_SPEC_VERSION: u32 = 2u32;
 pub const MND_SWAPCHAIN_USAGE_INPUT_ATTACHMENT_BIT_EXTENSION_NAME: &[u8] =
     b"XR_MND_swapchain_usage_input_attachment_bit\0";
+pub const MNDX_force_feedback_curl_SPEC_VERSION: u32 = 1u32;
+pub const MNDX_FORCE_FEEDBACK_CURL_EXTENSION_NAME: &[u8] = b"XR_MNDX_force_feedback_curl\0";
 pub const MSFT_unbounded_reference_space_SPEC_VERSION: u32 = 1u32;
 pub const MSFT_UNBOUNDED_REFERENCE_SPACE_EXTENSION_NAME: &[u8] =
     b"XR_MSFT_unbounded_reference_space\0";

@@ -54,6 +54,7 @@ struct Parser {
     cmd_aliases: Vec<(String, String)>,
     extensions: IndexMap<String, Tag>,
     disabled_exts: HashSet<Rc<str>>,
+    legacy_tags: HashMap<String, String>,
     api_version: Option<(u16, u16, u32)>,
     base_headers: IndexMap<String, Vec<String>>,
 }
@@ -86,6 +87,11 @@ impl Parser {
             .copied()
             .map(Into::into)
             .collect(),
+            legacy_tags: [("EXTX", "EXT"), ("HTCX", "HTC"), ("MNDX", "MND")]
+                .iter()
+                .copied()
+                .map(|(a, b)| (a.into(), b.into()))
+                .collect(),
             api_version: None,
             base_headers: IndexMap::new(),
         }
@@ -314,7 +320,14 @@ impl Parser {
             self.disabled_exts.insert(ext_name);
         } else {
             let (tag_name, _) = split_ext_tag(&ext_name);
-            if let Some(tag) = self.extensions.get_mut(tag_name) {
+
+            let effective_tag = self
+                .legacy_tags
+                .get(tag_name)
+                .map(|x| x.as_str())
+                .unwrap_or(tag_name);
+
+            if let Some(tag) = self.extensions.get_mut(effective_tag) {
                 tag.extensions.push(Extension {
                     name: ext_name,
                     version: ext_version.unwrap(),
